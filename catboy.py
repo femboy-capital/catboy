@@ -14,10 +14,10 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 NEWS_TOKEN = os.getenv('NEWS_TOKEN')
 NEWS_URL = 'https://cryptopanic.com/api/v1/posts/?auth_token={0}&filter=hot'.format(NEWS_TOKEN)
-
+NOID_IMAGE = "https://i.imgur.com/n8GY4sL.jpg"
 NEWS_COMMANDS = ['!news']
 FEMBOY_COMMANDS = ['!femboy', '!downbad']
-
+NOID_COMMAND = "!noid"
 UWU_OPTIONS = ['owo', 'uwu', 'uvu']
 
 
@@ -73,6 +73,11 @@ class Nekobot(discord.Client):
             if message.content.startswith(femboy_command):
                 await self.fetch_femboy(message)
                 return
+
+        
+        if message.content.startswith(NOID_COMMAND):
+            await message.channel.send(NOID_IMAGE)
+            return
 
     async def on_member_join(self, member):
         guild = member.guild
