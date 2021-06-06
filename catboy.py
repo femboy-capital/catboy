@@ -5,6 +5,11 @@ import random
 from reddit import RedditFetcher
 import asyncio
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 NEWS_TOKEN = os.getenv('NEWS_TOKEN')
