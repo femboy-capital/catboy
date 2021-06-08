@@ -4,7 +4,7 @@ catboy is a horrible discord bot. he has 5 commands right now:
 * `!femboy` - fetch a femboy from reddit
 * `!pentacle [topic]` - search pentacle.ai for an ETH topic and post related links
 * `!noid` - noid
-* `!hetro` - fetch some hetro
+* `!hetero` - fetch some hetero
 
 he also says hello to new server members. 
 
