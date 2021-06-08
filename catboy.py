@@ -23,7 +23,7 @@ HETERO_LINKS = ['https://i.imgur.com/fyPhlfN.mp4', 'https://i.imgur.com/C4y03Gh.
 NEWS_COMMANDS = ['!news']
 FEMBOY_COMMANDS = ['!femboy', '!downbad']
 NOID_COMMAND = '!noid'
-HETERO__COMMAND = '!hetero'
+HETERO_COMMAND = '!hetero'
 PENTACLE_COMMANDS = ['!pentacle']
 UWU_OPTIONS = ['owo', 'uwu', 'uvu']
 
