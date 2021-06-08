@@ -14,10 +14,13 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 NEWS_TOKEN = os.getenv('NEWS_TOKEN')
 NEWS_URL = 'https://cryptopanic.com/api/v1/posts/?auth_token={0}&filter=hot'.format(NEWS_TOKEN)
-NOID_IMAGE = "https://i.imgur.com/hA9eBGB.png"
+NOID_IMAGE = 'https://i.imgur.com/hA9eBGB.png'
+PENTACLE_ETH_URL = 'https://pentacle.ai/eth-ecosystem.json'
+
 NEWS_COMMANDS = ['!news']
 FEMBOY_COMMANDS = ['!femboy', '!downbad']
-NOID_COMMAND = "!noid"
+NOID_COMMAND = '!noid'
+PENTACLE_COMMANDS = ['!pentacle']
 UWU_OPTIONS = ['owo', 'uwu', 'uvu']
 
 
@@ -57,6 +60,36 @@ class Nekobot(discord.Client):
             fetcher.use_url(img_url)
         await message.channel.send(img_url)
 
+    async def search_pentacle(self, message):
+        components = message.content.split(' ')
+        if len(components) < 2:
+            await message.channel.send(owoify("Please provide a search topic!", random.choice(UWU_OPTIONS)))
+            return
+
+        async with message.channel.typing():
+            r = requests.get(url=PENTACLE_ETH_URL)
+            topics = r.json()['children']
+            items = []
+            for topic in topics:
+                for item in topic['children']:
+                    items.append(item)
+        
+        for item in items:
+            if item['name'].lower() == components[1].lower():
+                embed = discord.Embed(title=item['name'])
+                embed.set_image(url=item['img'])
+                for subitem in item['children']:
+                    if subitem['name'] == 'Links':
+                        for link in subitem['children']:
+                            embed.add_field(name=link['name'], value='[View]({0})'.format(link['url']))
+
+                await message.channel.send(embed=embed)
+                return
+        
+        await message.channel.send(owoify("I'm so sorry, I couldn't find what you were looking for!", random.choice(UWU_OPTIONS)))
+        return        
+
+
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
 
@@ -78,6 +111,11 @@ class Nekobot(discord.Client):
         if message.content.startswith(NOID_COMMAND):
             await message.channel.send(NOID_IMAGE)
             return
+
+        for pentacle_command in PENTACLE_COMMANDS:
+            if message.content.startswith(pentacle_command):
+                await self.search_pentacle(message)
+                return
 
     async def on_member_join(self, member):
         guild = member.guild
