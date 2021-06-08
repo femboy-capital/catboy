@@ -16,10 +16,12 @@ NEWS_TOKEN = os.getenv('NEWS_TOKEN')
 NEWS_URL = 'https://cryptopanic.com/api/v1/posts/?auth_token={0}&filter=hot'.format(NEWS_TOKEN)
 NOID_IMAGE = 'https://i.imgur.com/hA9eBGB.png'
 PENTACLE_ETH_URL = 'https://pentacle.ai/eth-ecosystem.json'
+HETRO_LINKS = ['https://i.imgur.com/fyPhlfN.mp4', 'https://i.imgur.com/C4y03Gh.mp4', 'https://i.imgur.com/eIP3BbH.mp4', 'https://i.imgur.com/3SrxqD9.jpeg']
 
 NEWS_COMMANDS = ['!news']
 FEMBOY_COMMANDS = ['!femboy', '!downbad']
 NOID_COMMAND = '!noid'
+HETRO_COMMAND = '!hetro'
 PENTACLE_COMMANDS = ['!pentacle']
 UWU_OPTIONS = ['owo', 'uwu', 'uvu']
 
@@ -107,6 +109,9 @@ class Nekobot(discord.Client):
                 await self.fetch_femboy(message)
                 return
 
+        if message.content.startswith(HETRO_COMMAND):
+            await message.channel.send(random.choice(HETRO_LINKS))
+            return
         
         if message.content.startswith(NOID_COMMAND):
             await message.channel.send(NOID_IMAGE)
