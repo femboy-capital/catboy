@@ -6,6 +6,8 @@ from reddit import RedditFetcher
 import asyncio
 import os
 from dotenv import load_dotenv
+import os.path
+import pickle
 
 
 load_dotenv()
@@ -33,6 +35,16 @@ class Nekobot(discord.Client):
         super().__init__(intents=intents)
         self.fetchers = [RedditFetcher('CuteTraps'), RedditFetcher('femboyhentai'), RedditFetcher('traphentai')]
 
+        if os.path.exists('posted.pickle'):
+            with open('posted.pickle', 'rb') as f:
+                self.posted_cache = pickle.load(f)
+        else:
+            self.posted_cache = set()
+
+    def save_posted_cache(self):
+        with open('posted.pickle', 'wb') as f:
+            pickle.dump(self.posted_cache, f, protocol=pickle.HIGHEST_PROTOCOL)
+
     async def fetch_news(self, message):
         async with message.channel.typing():
             r = requests.get(url=NEWS_URL)
@@ -49,7 +61,7 @@ class Nekobot(discord.Client):
         urls = []
         async with message.channel.typing():
             for fetcher in self.fetchers:
-                img_url = fetcher.fetch_random()
+                img_url = fetcher.fetch_random(self.posted_cache)
                 if img_url != None:
                     urls.append(img_url)
 
@@ -59,7 +71,8 @@ class Nekobot(discord.Client):
 
         img_url = random.choice(urls)
         for fetcher in self.fetchers:
-            fetcher.use_url(img_url)
+            self.posted_cache.add(img_url)
+            self.save_posted_cache()
         await message.channel.send(img_url)
 
     async def search_pentacle(self, message):
