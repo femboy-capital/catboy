@@ -25,6 +25,7 @@ FEMBOY_COMMANDS = ['!femboy', '!downbad']
 NOID_COMMAND = '!noid'
 HETERO_COMMAND = '!hetero'
 PENTACLE_COMMANDS = ['!pentacle']
+SAY_COMMANDS = ['!say', '!uwu']
 UWU_OPTIONS = ['owo', 'uwu', 'uvu']
 
 
@@ -104,6 +105,16 @@ class Nekobot(discord.Client):
         await message.channel.send(owoify("I'm so sorry, I couldn't find what you were looking for!", random.choice(UWU_OPTIONS)))
         return        
 
+    async def say(self, message):
+        async with message.channel.typing():
+            components = message.content.split(' ', 1)
+            
+        if len(components) < 2:
+            await message.channel.send(owoify("Say what?", random.choice(UWU_OPTIONS)))
+            return
+
+        await message.channel.send(owoify(components[1], random.choice(UWU_OPTIONS)))
+        return
 
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
@@ -133,6 +144,11 @@ class Nekobot(discord.Client):
         for pentacle_command in PENTACLE_COMMANDS:
             if message.content.startswith(pentacle_command):
                 await self.search_pentacle(message)
+                return
+        
+        for say_command in SAY_COMMANDS:
+            if message.content.startswith(say_command):
+                await self.say(message)
                 return
 
     async def on_member_join(self, member):
