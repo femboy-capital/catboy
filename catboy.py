@@ -17,12 +17,14 @@ DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 NEWS_TOKEN = os.getenv('NEWS_TOKEN')
 NEWS_URL = 'https://cryptopanic.com/api/v1/posts/?auth_token={0}&filter=hot'.format(NEWS_TOKEN)
 NOID_IMAGE = 'https://i.imgur.com/hA9eBGB.png'
+NESO_IMAGE = 'httos://imgur.com/a/P87NNYA'
 PENTACLE_ETH_URL = 'https://pentacle.ai/eth-ecosystem.json'
 HETERO_LINKS = ['https://i.imgur.com/fyPhlfN.mp4', 'https://i.imgur.com/C4y03Gh.mp4', 'https://i.imgur.com/eIP3BbH.mp4', 'https://i.imgur.com/3SrxqD9.jpeg']
 
 NEWS_COMMANDS = ['!news']
 FEMBOY_COMMANDS = ['!femboy', '!downbad']
 NOID_COMMAND = '!noid'
+NESO_COMMAND = '!neso'
 HETERO_COMMAND = '!hetero'
 PENTACLE_COMMANDS = ['!pentacle']
 SAY_COMMANDS = ['!say', '!uwu']
@@ -139,6 +141,10 @@ class Nekobot(discord.Client):
         
         if message.content.startswith(NOID_COMMAND):
             await message.channel.send(NOID_IMAGE)
+            return
+
+	if message.content.startswith(NESO_COMMAND):
+            await message.channel.send(NESO_IMAGE)
             return
 
         for pentacle_command in PENTACLE_COMMANDS:
