@@ -143,7 +143,7 @@ class Nekobot(discord.Client):
             await message.channel.send(NOID_IMAGE)
             return
 
-	if message.content.startswith(NESO_COMMAND):
+        if message.content.startswith(NESO_COMMAND):
             await message.channel.send(NESO_IMAGE)
             return
 
