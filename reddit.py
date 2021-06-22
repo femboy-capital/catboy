@@ -22,7 +22,8 @@ class RedditFetcher:
         while tried < len(self.cache['data']['children']):
             post = random.choice(self.cache['data']['children'])
             if not post['data']['url'] in posted_cache:
-                return post['data']['url']
+                if not 'youtube' in post['data']['url']:
+                    return post['data']['url']
             tried += 1
         
         return None
